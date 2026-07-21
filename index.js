@@ -25,11 +25,16 @@ cloudinary.config({
 const storage = multer.diskStorage({});
 const upload = multer({ storage });
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the Image Upload API");
+});
+
 app.post("/upload", upload.single("image"), async (req, res) => {
     try {
         const file = req.file;
-        if(!file) return 
-            res.status = req.status(400).json({ error: "No file uploaded" })
+        if (!file) {
+  return res.status(400).json({ error: "No file uploaded" });
+}
         
         const result = await cloudinary.uploader.upload(req.file.path, {
             folder: "uploads",

@@ -48,6 +48,16 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     }
 });
 
+app.get("/images", async (req, res) => {
+    try {
+        const images = await imageModel.find();
+        res.status(200).json(images);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching images", error: error.message }); 
+    }
+})
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
